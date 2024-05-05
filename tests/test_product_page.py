@@ -62,4 +62,28 @@ class TestGuestProductPage:
         self.basket_page.is_basket_empty_text_present()
 
 
+class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        self.email = str(time.time()) + "@fakemail.org"
+        self.password = "12576gJfr"
+        self.login_page = LoginPage(browser, "http://selenium1py.pythonanywhere.com/ru/accounts/login/")
+        self.login_page.open()
+        self.login_page.register_new_user(self.email, self.password)
+        self.login_page.should_be_authorized_user()
 
+        self.product_page = ProductPage(
+            browser,
+            "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0"
+        )
+        self.product_page.open()
+
+    def test_user_cant_see_success_message(self):
+        self.product_page.should_not_be_success_message()
+
+    @pytest.mark.need_review
+    def test_user_can_add_product_to_basket(self):
+        self.product_page.add_to_cart()
+        self.product_page.solve_quiz_and_get_code()
+        self.product_page.find_product_name()
+        self.product_page.find_product_cost()
