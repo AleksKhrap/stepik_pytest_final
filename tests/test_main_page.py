@@ -1,4 +1,5 @@
 from pages.main_page import MainPage
+from pages.basket_page import BasketPage
 import pytest
 
 
@@ -7,7 +8,7 @@ import pytest
 class TestLoginFromMainPage:
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, browser, link):
-        self.main_page = MainPage(browser, link)  # иниц-ем Page Object, передаем в конструктор экземпляр драйвера
+        self.main_page = MainPage(browser, link)
         self.main_page.open()
 
     def test_guest_can_go_to_login_page(self):
@@ -20,3 +21,8 @@ class TestLoginFromMainPage:
     def test_guest_should_see_login_link(self):
         self.main_page.should_be_login_link()
 
+    def test_guest_cant_see_product_in_basket_opened_from_main_page(self, browser):
+        self.main_page.go_to_basket_page()
+        self.basket_page = BasketPage(browser, browser.current_url)
+        self.basket_page.is_basket_empty()
+        self.basket_page.is_basket_empty_text_present()
