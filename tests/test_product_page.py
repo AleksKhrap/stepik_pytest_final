@@ -8,9 +8,9 @@ import time
 @pytest.mark.product_guest
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
                                   # "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/",
-                                  pytest.param("http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_"
-                                               "207/?promo=offer7",
-                                               marks=pytest.mark.xfail),
+                                  # pytest.param("http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_"
+                                  #             "207/?promo=offer7",
+                                  #             marks=pytest.mark.xfail),
                                   ]
                          )
 class TestGuestProductPage:
